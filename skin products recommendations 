@@ -1,0 +1,42 @@
+# filename: skin_recommendation_app.py
+
+import streamlit as st
+
+# Sample database of products
+products = [
+    {"name": "Hydrating Face Cream", "skin_type": "dry", "concern": "hydration"},
+    {"name": "Oil Control Gel", "skin_type": "oily", "concern": "oil control"},
+    {"name": "Sensitive Skin Moisturizer", "skin_type": "sensitive", "concern": "calming"},
+    {"name": "Anti-Aging Serum", "skin_type": "all", "concern": "aging"},
+    {"name": "Brightening Face Mask", "skin_type": "all", "concern": "dark spots"},
+    {"name": "Acne Spot Treatment", "skin_type": "oily", "concern": "acne"},
+]
+
+# App title
+st.title("💆 Skin Products Recommendation App")
+
+# User input: Skin type
+skin_type = st.selectbox(
+    "Select your skin type:",
+    ["dry", "oily", "sensitive", "combination"]
+)
+
+# User input: Skin concern
+concern = st.selectbox(
+    "Select your primary skin concern:",
+    ["hydration", "oil control", "calming", "aging", "dark spots", "acne"]
+)
+
+# Button to get recommendations
+if st.button("Get Recommendations"):
+    recommended = []
+    for product in products:
+        if (product["skin_type"] == skin_type or product["skin_type"] == "all") and product["concern"] == concern:
+            recommended.append(product["name"])
+    
+    if recommended:
+        st.success("Here are products suitable for you:")
+        for p in recommended:
+            st.write(f"- {p}")
+    else:
+        st.warning("Sorry, no products match your selection. Try changing skin type or concern!")
